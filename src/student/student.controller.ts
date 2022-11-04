@@ -1,18 +1,19 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { get } from 'http';
+import { Student } from './student.model';
 import { StudentService } from './student.service';
 
 @Controller('student')
 export class StudentController {
-    constructor(private readonly studentService:StudentService) {}
+    constructor(private readonly studentService:StudentService){}
 
     @Get()
-    readAllStudents():Promise<any>{
-        return this.studentService.readStudents();
+    readAllStudents(): Promise<any>{
+        return this.studentService.readStudent();
     }
 
     @Post()
-    async createStudent(@Body() student: Student): Promisse<any>{
+    async createStudent(@Body() student: Student): Promise<any> {
+
         var response = await this.studentService.createStudent(student);
         return {id: response}
     }
