@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { Student } from './student.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -31,9 +31,24 @@ export class StudentService {
     };
 
     // UPDATE
-    
+    async updateStudent(student:Student){
+        const updatedStudent = await this.studentModel.findOne({tia: student.tia});
+        if (!updatedStudent){
+            throw new NotFoundException('Could not find the student.')
+        }
+        if (student.name){
+            updatedStudent.name = student.name
+        }
+        if (student.course){
+            updatedStudent.course = student.course
+        }
+        updatedStudent.save()
+    }
+
     // DELETE
- 
+    async deleteStudent(tia: number){
+        const result = await this.studentModel.deleteOne({tia: tia}).exec();
+    }
     
     
     
