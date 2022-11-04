@@ -1,4 +1,4 @@
-import { Body, Injectable, Param } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Student } from './student.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -20,7 +20,7 @@ export class StudentService {
                 course: student.course
             }
         );
-        const result = await this.studentModel.save();
+        const result = await studentModel.save();
         return result.id as string;
     };
 
